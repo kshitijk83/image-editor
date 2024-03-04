@@ -1,4 +1,5 @@
 import LogoutButton from "@/components/LogoutButtons";
+import { FabricProvider } from "@/hooks/useFabricRef";
 import React from "react";
 
 const Layout = ({ children }) => {
@@ -8,7 +9,7 @@ const Layout = ({ children }) => {
         <div>Photo Editor</div>
         <LogoutButton />
       </div>
-      {children}
+      <FabricProvider>{children}</FabricProvider>
     </div>
   );
 };

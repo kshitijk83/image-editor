@@ -1,15 +1,11 @@
 "use client";
+
 import CanvasBox2 from "@/components/CanvasBox2";
-import fabric from "@/fabric";
+// import fabric from "@/fabric";
 import React, { useRef, useState } from "react";
 
 const MainArea = () => {
   const [image, setImage] = useState(null);
-
-  const fabricRef = useRef({
-    fabricRef: null,
-    canvasRef: null,
-  });
 
   const handleUploadImage = (event) => {
     if (event.target.files?.[0]) {
@@ -26,10 +22,14 @@ const MainArea = () => {
   if (!image) {
     insideBox = <input type="file" onChange={handleUploadImage} />;
   } else {
-    insideBox = <CanvasBox2 image={image} refs={fabricRef} />;
+    insideBox = <CanvasBox2 image={image} />;
   }
 
-  return <div>{insideBox}</div>;
+  return (
+    <div className="flex flex-col">
+      <div>{insideBox}</div>
+    </div>
+  );
 };
 
 export default MainArea;

@@ -4,99 +4,81 @@ import fabric from "@/fabric";
 import React, {
   MutableRefObject,
   forwardRef,
+  useEffect,
   useLayoutEffect,
   useRef,
 } from "react";
+import { useFabricRef } from "@/hooks/useFabricRef";
+import useFeatureStore from "@/stores/useFeatureStore";
 
-const CanvasBox = function CanvasBox({ image, refs }) {
-  useLayoutEffect(() => {
-    let fabricRef = refs.current.fabricRef as fabric.Canvas | null;
-    // Additional canvas setup can go here
-    // return () => {
-    //   if (canvas.current) {
-    //     canvas.current.dispose();
-    //   }
-    // };
-    if (image && !fabricRef) {
-      let canvasActualWidth = 800;
-      let canvasActualHeight = 600;
+const CanvasBox = function CanvasBox({ image }) {
+  const { fabricRef, canvasRef } = useFabricRef();
+  const setSelection = useFeatureStore((state) => state.setSelection);
+  useEffect(() => {
+    if (image && !fabricRef.current) {
+      let maxWidth = 800;
+      let maxHeight = 600;
 
       const imgObj = new Image();
 
       imgObj.src = image;
       imgObj.onload = (e) => {
-        let aspectRatio = imgObj.width / imgObj.height;
-        let calcWidth = canvasActualWidth;
+        var scale = Math.min(
+          maxWidth / imgObj.width,
+          maxHeight / imgObj.height
+        );
 
-        let calcHeight = canvasActualWidth / aspectRatio;
-        console.log(calcWidth, calcHeight);
-        // imgObj.style.width = calcWidth + "px";
-        // imgObj.style.height = calcHeight + "px";
+        fabricRef.current = new fabric.Canvas("canvas", {
+          width: scale * imgObj.width,
+          height: scale * imgObj.height,
+          backgroundColor: "white",
+          preserveObjectStacking: true,
+        });
 
         const imgInstance = new fabric.Image(imgObj, {
           left: 0,
           top: 0,
           width: imgObj.width,
           height: imgObj.height,
-        });
-
-        fabricRef = new fabric.Canvas("canvas", {
-          width: calcWidth,
-          height: calcHeight,
-          backgroundColor: "pink",
+          moveCursor: "",
         });
 
         // Scale the image
-        imgInstance.scaleToWidth(calcWidth);
-        imgInstance.scaleToHeight(calcHeight);
+        imgInstance.scale(scale);
+        imgInstance.selectable = true;
+        const filters = {
+          brightness: new fabric.Image.filters.Brightness({ brightness: 0 }),
+          saturation: new fabric.Image.filters.Saturation(),
+          contrast: new fabric.Image.filters.Contrast(),
+          hue: new fabric.Image.filters.HueRotation(),
+        };
 
-        // Center the image on the canvas
-        imgInstance.center();
-        imgInstance.selectable = false;
-        fabricRef.add(imgInstance);
+        imgInstance.filters.push(filters.brightness);
+        imgInstance.filters.push(filters.saturation);
+        imgInstance.filters.push(filters.contrast);
+        imgInstance.filters.push(filters.hue);
+        imgInstance.applyFilters();
+        fabricRef.current.add(imgInstance);
+
+        fabricRef.current.on("selection:created", function (obj) {
+          setSelection(fabricRef.current.getActiveObject().type);
+          // Update component state or perform other actions
+        });
+
+        fabricRef.current.on("selection:updated", function (obj) {
+          setSelection(fabricRef.current.getActiveObject().type);
+          // Update component state or perform other actions
+        });
       };
     }
   }, []);
 
-  const handleUploadImage = (image) => {
-    const canvas = refs.current.fabricRef as fabric.Canvas;
-    if (image) {
-      const file = image;
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const imgObj = new Image();
-        imgObj.src = e.target.result as string;
-
-        const canvasWidth = canvas.getWidth();
-        const canvasHeight = canvas.getHeight();
-
-        imgObj.onload = () => {
-          const imgInstance = new fabric.Image(imgObj, {
-            left: 0,
-            top: 0,
-            // width: canvas.getWidth(),
-            // height: canvas.getHeight(),
-          });
-          const scale = Math.min(
-            canvasWidth / imgObj.width,
-            canvasHeight / imgObj.height
-          );
-
-          // Scale the image
-          imgInstance.scale(scale);
-
-          // Center the image on the canvas
-          imgInstance.center();
-          canvas.add(imgInstance);
-        };
-      };
-      reader.readAsDataURL(file);
-    }
-  };
   return (
-    <div>
-      <canvas id="canvas"></canvas>
-    </div>
+    <canvas
+      id="canvas"
+      className="w-full h-full"
+      ref={(ref) => (canvasRef.current = ref)}
+    ></canvas>
   );
 };
 export default CanvasBox;

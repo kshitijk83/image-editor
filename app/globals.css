@@ -13,3 +13,13 @@
     @apply bg-orange-400 p-2 !important;
   }
 }
+
+@layer base {
+  button {
+    border: 1px solid black;
+  }
+
+  input {
+    border: 1px solid black;
+  }
+}

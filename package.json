@@ -14,7 +14,8 @@
     "fabricjs-react": "^1.2.2",
     "next": "14.1.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/fabric": "^5.3.7",
