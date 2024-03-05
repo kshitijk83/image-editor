@@ -14,6 +14,7 @@ import useFeatureStore from "@/stores/useFeatureStore";
 const CanvasBox = function CanvasBox({ image }) {
   const { fabricRef, canvasRef } = useFabricRef();
   const setSelection = useFeatureStore((state) => state.setSelection);
+  const setCanvasPainted = useFeatureStore((state) => state.setCanvasPainted);
   useEffect(() => {
     if (image && !fabricRef.current) {
       let maxWidth = 800;
@@ -59,6 +60,8 @@ const CanvasBox = function CanvasBox({ image }) {
         imgInstance.filters.push(filters.hue);
         imgInstance.applyFilters();
         fabricRef.current.add(imgInstance);
+
+        setCanvasPainted(true);
 
         fabricRef.current.on("selection:created", function (obj) {
           setSelection(fabricRef.current.getActiveObject().type);

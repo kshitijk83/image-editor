@@ -1,5 +1,14 @@
 import { useFabricRef } from "@/hooks/useFabricRef";
+import {
+  BorderSolidIcon,
+  FontBoldIcon,
+  FontItalicIcon,
+  OverlineIcon,
+  UnderlineIcon,
+} from "@radix-ui/react-icons";
 import React from "react";
+import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
+import { Input } from "./ui/input";
 
 const TextBoxConfig = () => {
   const { fabricRef } = useFabricRef();
@@ -21,58 +30,85 @@ const TextBoxConfig = () => {
     fabricRef.current.renderAll();
   };
 
-  const handleTextDecoration = (e) => {
-    const op = e.target.dataset.action;
+  const handleTextDecoration = (values) => {
+    // const op = e.target.dataset.action;
     const getCurrentSelectedObj =
       fabricRef.current.getActiveObject() as fabric.IText;
-    switch (op) {
-      case "underline":
-        getCurrentSelectedObj.set({ underline: true });
-        break;
-      case "line-through":
-        getCurrentSelectedObj.set({ linethrough: true });
-        break;
-      case "overline":
-        getCurrentSelectedObj.set({ overline: true });
-        break;
-      default:
-        break;
-    }
-    console.log(getCurrentSelectedObj);
+    const x = ["underline", "linethrough", "overline", "bold", "italic"];
+    x.forEach((item) => {
+      const isActive = values.find((y) => y === item);
+      if (isActive) {
+        if (item === "bold") {
+          getCurrentSelectedObj.set({ fontWeight: "bold" });
+        } else if (item === "italic") {
+          getCurrentSelectedObj.set({ fontStyle: "italic" });
+        } else {
+          getCurrentSelectedObj.set({ [item]: true });
+        }
+      } else {
+        if (item === "bold") {
+          getCurrentSelectedObj.set({ fontWeight: "normal" });
+        } else if (item === "italic") {
+          getCurrentSelectedObj.set({ fontStyle: "normal" });
+        } else {
+          getCurrentSelectedObj.set({ [item]: false });
+        }
+      }
+    });
 
     fabricRef.current.renderAll();
   };
 
   return (
     <div>
-      <div className="mb-2 flex gap-2 items-center">
-        <p>Input Color of text here:</p>
+      <div className="flex flex-col gap-2 items-center mb-5">
+        <p className="text-center text-lg font-semibold">Text Color</p>
         <input
           type="color"
           name="text-colors"
           id="text-color"
           onChange={handleColorChange}
-          // className="w-full"
+          className="p-1 border-black h-10 w-12"
         />
       </div>
-      <div className="mb-2 flex gap-2 items-center">
-        <p>FontSize: </p>
-        <input
-          type="number"
-          min={8}
-          defaultValue={32}
-          onChange={handleFontSizeChange}
-        />
-        px
+      <div className="flex flex-col gap-4 items-center mb-5">
+        <p className="text-center text-lg font-semibold">Text Size</p>
+        <div className="flex items-center gap-1">
+          <Input
+            type="number"
+            className="w-12 p-1"
+            min={8}
+            defaultValue={32}
+            onChange={handleFontSizeChange}
+          />
+          <span>px</span>
+        </div>
       </div>
-      <div
-        className="mb-2 flex gap-2 items-center"
-        onClick={handleTextDecoration}
-      >
-        <p>Text Decoration</p>
-        <button data-action="underline">Underline</button>
-        <button data-action="line-through">line through</button>
-        <button data-action="overline">over line</button>
+
+      <div className="flex flex-col gap-4">
+        <p className="text-center text-lg font-semibold">Text Decorations</p>
+        <ToggleGroup
+          type="multiple"
+          variant="outline"
+          size="lg"
+          onValueChange={handleTextDecoration}
+        >
+          <ToggleGroupItem value="underline" aria-label="Toggle underline">
+            <UnderlineIcon className="h-4 w-4" />
+          </ToggleGroupItem>
+          <ToggleGroupItem value="linethrough" aria-label="linethrough">
+            <BorderSolidIcon className="h-4 w-4" />
+          </ToggleGroupItem>
+          <ToggleGroupItem value="overline" aria-label="Toggle overline">
+            <OverlineIcon />
+          </ToggleGroupItem>
+          <ToggleGroupItem value="bold" aria-label="Toggle bold">
+            <FontBoldIcon className="h-4 w-4" />
+          </ToggleGroupItem>
+          <ToggleGroupItem value="italic" aria-label="italic">
+            <FontItalicIcon className="h-4 w-4" />
+          </ToggleGroupItem>
+        </ToggleGroup>
       </div>
     </div>
   );

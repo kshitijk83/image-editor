@@ -4,9 +4,9 @@ import React from "react";
 
 const Layout = ({ children }) => {
   return (
-    <div className=" w-full h-screen">
-      <div className="flex justify-between w-full">
-        <div>Photo Editor</div>
+    <div className="w-full h-screen">
+      <div className="flex justify-between w-full p-3 shadow-xl border-b-2 items-center">
+        <div className="text-lg font-bold">Photo Editor</div>
         <LogoutButton />
       </div>
       <FabricProvider>{children}</FabricProvider>

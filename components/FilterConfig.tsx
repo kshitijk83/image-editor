@@ -1,12 +1,13 @@
 import { useFabricRef } from "@/hooks/useFabricRef";
 import React from "react";
 import fabric from "@/fabric";
+import { Slider } from "./ui/slider";
 
 const FilterConfig = () => {
   const { fabricRef } = useFabricRef();
   const filters = [new fabric.Image.filters.Brightness({ brightness: 0 })];
-  const handleFilters = (event) => {
-    const target = event.target;
+  const handleFilters = (target) => {
+    // const target = event.target;
     const activeObj = fabricRef.current.getActiveObject() as fabric.Image;
 
     activeObj.filters.forEach((item) => {
@@ -38,48 +39,60 @@ const FilterConfig = () => {
   };
   return (
     <div onChange={handleFilters}>
-      <div className="flex gap-2 items-center">
-        <label htmlFor="brightness">brightness</label>
-        <input
-          type="range"
+      <div className="flex flex-col gap-3 items-center mb-5">
+        <label htmlFor="text-center text-lg font-semibold">Brightness</label>
+        <Slider
           name="brightness"
           id="brightness"
+          defaultValue={[0]}
           min={-100}
-          defaultValue={0}
           max={100}
+          step={1}
+          onValueChange={([value]) => {
+            handleFilters({ name: "brightness", value: value });
+          }}
         />
       </div>
-      <div className="flex gap-2 items-center">
-        <label htmlFor="saturation">brightness</label>
-        <input
-          type="range"
+      <div className="flex flex-col gap-3 items-center mb-5">
+        <label htmlFor="text-center text-lg font-semibold">Saturation</label>
+        <Slider
           name="saturation"
           id="saturation"
+          defaultValue={[0]}
           min={-100}
-          defaultValue={0}
           max={100}
+          step={1}
+          onValueChange={([value]) => {
+            handleFilters({ name: "saturation", value: value });
+          }}
         />
       </div>
-      <div className="flex gap-2 items-center">
-        <label htmlFor="contrast">brightness</label>
-        <input
-          type="range"
+      <div className="flex flex-col gap-3 items-center mb-5">
+        <label htmlFor="text-center text-lg font-semibold">Contrast</label>
+        <Slider
           name="contrast"
           id="contrast"
+          defaultValue={[0]}
           min={-100}
-          defaultValue={0}
           max={100}
+          step={1}
+          onValueChange={([value]) => {
+            handleFilters({ name: "contrast", value: value });
+          }}
         />
       </div>
-      <div className="flex gap-2 items-center">
-        <label htmlFor="hue-rotation">brightness</label>
-        <input
-          type="range"
+      <div className="flex flex-col gap-3 items-center mb-5">
+        <label htmlFor="text-center text-lg font-semibold">Hue Rotation</label>
+        <Slider
           name="hue-rotation"
           id="hue-rotation"
+          defaultValue={[0]}
           min={-100}
-          defaultValue={0}
           max={100}
+          step={1}
+          onValueChange={([value]) => {
+            handleFilters({ name: "hue-rotation", value: value });
+          }}
         />
       </div>
     </div>

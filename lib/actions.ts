@@ -3,6 +3,8 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
+import { z } from "zod";
+import { UserSchema } from "./validations";
 
 // import { signIn } from '@/auth'
 
@@ -31,6 +33,10 @@ class UsersList {
 
     return user;
   }
+
+  findUser(email: string) {
+    return this.list.find((item) => email === item.email);
+  }
 }
 
 const userList = new UsersList();
@@ -43,16 +49,16 @@ const timer = async (value) => {
   });
 };
 
-export async function authenticate(formData: FormData) {
+export async function authenticate(data: z.infer<typeof UserSchema>) {
   try {
     await timer(2000);
-    const email = formData.get("email");
-    const password = formData.get("password");
+    const email = data.email;
+    const password = data.password;
     const user = userList.getUser({ email, password });
     if (!user) {
       return {
         type: "error",
-        message: "no user found",
+        message: "Email or password might be wrong",
       };
     }
     const encryptedText = `${email}-${password}`;
@@ -72,10 +78,17 @@ export async function logout() {
   redirect("/login");
 }
 
-export async function signUp(formData: FormData) {
+export async function signUp(data: z.infer<typeof UserSchema>) {
   await timer(2000);
-  const email = formData.get("email");
-  const password = formData.get("password");
+  const email = data.email;
+  const password = data.password;
+  if (Boolean(userList.findUser(email))) {
+    return {
+      type: "error",
+      message: " User already exist!",
+    };
+  }
+  console.log("asdf");
   userList.add({ email, password });
   const encryptedText = `${email}-${password}`;
   cookies().set("token", encryptedText, {

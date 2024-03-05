@@ -4,9 +4,12 @@ import { useFabricRef } from "@/hooks/useFabricRef";
 import React from "react";
 
 import fabric from "@/fabric";
+import { Button } from "./ui/button";
+import useFeatureStore from "@/stores/useFeatureStore";
 
 const Options = () => {
   const { canvasRef, fabricRef } = useFabricRef();
+  const isCanvasPainted = useFeatureStore((state) => state.isCanvasPainted);
 
   const handleDownload = () => {
     if (fabricRef.current) {
@@ -33,6 +36,7 @@ const Options = () => {
     text.borderColor = "black";
     text.cornerColor = "black";
     text.transparentCorners = true;
+    fabricRef.current.setActiveObject(text);
 
     fabricRef.current.add(text);
   };
@@ -48,26 +52,34 @@ const Options = () => {
     fabricRef.current.renderAll();
   };
 
+  if (!isCanvasPainted) {
+    return (
+      <div className="h-full w-full flex items-center justify-center">
+        <span className="font-bold">Please upload image first</span>
+      </div>
+    );
+  }
+
   return (
-    <aside className="absolute left-0 top-0 w-[300px] h-full bg-white shadow-lg flex-col flex">
+    <>
       <div className="p-4 font-semibold flex flex-col">
-        <div className="mb-2">Options</div>
-        <button type="button" onClick={addTextHandler}>
+        <div className="mb-2 text-center mb-4">Options</div>
+        <Button type="button" onClick={addTextHandler}>
           Add Text
-        </button>
+        </Button>
       </div>
 
       <div className="p-4 font-semibold flex flex-col">
         {/* <div >Filters</div> */}
-        <button className="mb-2" onClick={handleFilters}>
+        <Button className="mb-2" onClick={handleFilters}>
           Filters
-        </button>
+        </Button>
       </div>
 
-      <button className="m-4" onClick={handleDownload}>
+      <Button className="m-4" onClick={handleDownload}>
         Dowload
-      </button>
-    </aside>
+      </Button>
+    </>
   );
 };
 

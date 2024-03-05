@@ -32,17 +32,17 @@ const ConfigParams = () => {
       case FEATURES.IMAGE:
         return <FilterConfig />;
       default:
-        return <div> No Feature selected</div>;
+        return (
+          <div className="h-full w-full flex items-center justify-center">
+            <span className="font-bold">No Feature Selected</span>
+          </div>
+        );
     }
   };
 
-  return (
-    <div>
-      <div className="p-4 font-semibold flex flex-col">
-        {renderFeatureParams()}
-      </div>
-    </div>
-  );
+  console.log(activeConfig);
+
+  return <div className="p-4 h-full">{renderFeatureParams()}</div>;
 };
 
 export default ConfigParams;

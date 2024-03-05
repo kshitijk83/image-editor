@@ -1,6 +1,7 @@
 "use client";
 
 import { logout } from "@/lib/actions";
+import { Button } from "./ui/button";
 
 export default function LogoutButton() {
   const handleLogout = async () => {
@@ -8,8 +9,8 @@ export default function LogoutButton() {
   };
 
   return (
-    <button className="btn" type="submit" onClick={handleLogout}>
+    <Button className="btn" type="submit" onClick={handleLogout}>
       Logout
-    </button>
+    </Button>
   );
 }
