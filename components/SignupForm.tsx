@@ -45,7 +45,7 @@ const SignupForm = () => {
     }
   }
   return (
-    <div className="w-[400px] border-2 border-slate-50 p-5">
+    <div className="w-[400px] border-2 border-slate-800 p-5">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
