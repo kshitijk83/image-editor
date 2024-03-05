@@ -7,7 +7,6 @@ const FilterConfig = () => {
   const { fabricRef } = useFabricRef();
   const filters = [new fabric.Image.filters.Brightness({ brightness: 0 })];
   const handleFilters = (target) => {
-    // const target = event.target;
     const activeObj = fabricRef.current.getActiveObject() as fabric.Image;
 
     activeObj.filters.forEach((item) => {
@@ -15,21 +14,25 @@ const FilterConfig = () => {
         item instanceof fabric.Image.filters.Brightness &&
         target.name === "brightness"
       ) {
+        //@ts-ignore
         item.brightness = parseInt(target.value, 10) / 100;
       } else if (
         item instanceof fabric.Image.filters.Saturation &&
         target.name === "saturation"
       ) {
+        //@ts-ignore
         item.saturation = parseInt(target.value, 10) / 100;
       } else if (
         item instanceof fabric.Image.filters.Contrast &&
         target.name === "contrast"
       ) {
+        //@ts-ignore
         item.contrast = parseInt(target.value, 10) / 100;
       } else if (
         item instanceof fabric.Image.filters.HueRotation &&
         target.name === "hue-rotation"
       ) {
+        //@ts-ignore
         item.rotation = parseInt(target.value, 10) / 100;
       }
     });
