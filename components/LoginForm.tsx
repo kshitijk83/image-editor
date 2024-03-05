@@ -75,7 +75,7 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
-          {form.formState.errors.root && (
+          {form.formState.errors.root?.message && (
             <FormMessage>{form.formState.errors.root.message}</FormMessage>
           )}
           <Button type="submit" className="w-full" disabled={loading}>
