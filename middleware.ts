@@ -10,6 +10,10 @@ export function middleware(request: NextRequest) {
   if (!isAuth && request.nextUrl.pathname.startsWith("/dashboard")) {
     return Response.redirect(new URL("/login", request.url));
   }
+
+  if (request.nextUrl.pathname === "/") {
+    return Response.redirect(new URL("/login", request.url));
+  }
 }
 
 export const config = {
