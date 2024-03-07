@@ -6,6 +6,35 @@ import React from "react";
 import fabric from "@/fabric";
 import { Button } from "./ui/button";
 import useFeatureStore from "@/stores/useFeatureStore";
+import {
+  DownloadIcon,
+  ImageIcon,
+  Pencil1Icon,
+  TextIcon,
+} from "@radix-ui/react-icons";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
+
+const OptionItem = ({ onClick, children, tooltipText, disabled }) => {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button disabled={disabled} className="btn-primary" onClick={onClick}>
+            {children}
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent className="bg-greys-800 text-white">
+          <p>{tooltipText}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+};
 
 const Options = () => {
   const { canvasRef, fabricRef } = useFabricRef();
@@ -52,34 +81,43 @@ const Options = () => {
     fabricRef.current.renderAll();
   };
 
-  if (!isCanvasPainted) {
-    return (
-      <div className="h-full w-full flex items-center justify-center">
-        <span className="font-bold">Please upload image first</span>
-      </div>
-    );
-  }
+  // if (!isCanvasPainted) {
+  //   return (
+  //     <div className="h-full w-full flex items-center justify-center">
+  //       <span className="font-bold">Please upload image first</span>
+  //     </div>
+  //   );
+  // }
 
   return (
-    <>
-      <div className="p-4 font-semibold flex flex-col">
-        <div className="mb-2 text-center mb-4">Options</div>
-        <Button type="button" onClick={addTextHandler}>
-          Add Text
-        </Button>
-      </div>
+    <div className="flex flex-col gap-3 items-center my-4 h-full justify-center">
+      <OptionItem
+        disabled={!isCanvasPainted}
+        onClick={addTextHandler}
+        tooltipText="Text"
+      >
+        <TextIcon />
+      </OptionItem>
+      <OptionItem
+        disabled={!isCanvasPainted}
+        onClick={handleFilters}
+        tooltipText="Image"
+      >
+        <ImageIcon />
+      </OptionItem>
 
-      <div className="p-4 font-semibold flex flex-col">
-        {/* <div >Filters</div> */}
-        <Button className="mb-2" onClick={handleFilters}>
-          Filters
-        </Button>
-      </div>
+      <OptionItem
+        disabled={!isCanvasPainted}
+        onClick={() => {}}
+        tooltipText="Image"
+      >
+        <Pencil1Icon />
+      </OptionItem>
 
-      <Button className="m-4" onClick={handleDownload}>
-        Dowload
+      <Button className="m-4 btn-primary mt-auto" onClick={handleDownload}>
+        <DownloadIcon />
       </Button>
-    </>
+    </div>
   );
 };
 

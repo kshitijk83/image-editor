@@ -41,7 +41,7 @@ const FilterConfig = () => {
     fabricRef.current.renderAll();
   };
   return (
-    <div onChange={handleFilters}>
+    <div onChange={handleFilters} className="px-10">
       <div className="flex flex-col gap-3 items-center mb-5">
         <label htmlFor="text-center text-lg font-semibold">Brightness</label>
         <Slider

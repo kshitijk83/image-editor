@@ -9,7 +9,7 @@ export default function LogoutButton() {
   };
 
   return (
-    <Button className="btn" type="submit" onClick={handleLogout}>
+    <Button className="btn-primary" type="submit" onClick={handleLogout}>
       Logout
     </Button>
   );

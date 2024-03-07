@@ -93,20 +93,40 @@ const TextBoxConfig = () => {
           size="lg"
           onValueChange={handleTextDecoration}
         >
-          <ToggleGroupItem value="underline" aria-label="Toggle underline">
-            <UnderlineIcon className="h-4 w-4" />
+          <ToggleGroupItem
+            className="aria-pressed:bg-greys-900 group"
+            value="underline"
+            aria-label="Toggle underline"
+          >
+            <UnderlineIcon className="h-4 w-4 group-aria-pressed:text-white" />
           </ToggleGroupItem>
-          <ToggleGroupItem value="linethrough" aria-label="linethrough">
-            <BorderSolidIcon className="h-4 w-4" />
+          <ToggleGroupItem
+            className="aria-pressed:bg-greys-900 group"
+            value="linethrough"
+            aria-label="linethrough"
+          >
+            <BorderSolidIcon className="h-4 w-4 group-aria-pressed:text-white" />
           </ToggleGroupItem>
-          <ToggleGroupItem value="overline" aria-label="Toggle overline">
-            <OverlineIcon />
+          <ToggleGroupItem
+            className="aria-pressed:bg-greys-900 group"
+            value="overline"
+            aria-label="Toggle overline"
+          >
+            <OverlineIcon className="h-4 w-4 group-aria-pressed:text-white" />
           </ToggleGroupItem>
-          <ToggleGroupItem value="bold" aria-label="Toggle bold">
-            <FontBoldIcon className="h-4 w-4" />
+          <ToggleGroupItem
+            className="aria-pressed:bg-greys-900 group"
+            value="bold"
+            aria-label="Toggle bold"
+          >
+            <FontBoldIcon className="h-4 w-4 group-aria-pressed:text-white" />
           </ToggleGroupItem>
-          <ToggleGroupItem value="italic" aria-label="italic">
-            <FontItalicIcon className="h-4 w-4" />
+          <ToggleGroupItem
+            className="aria-pressed:bg-greys-900 group"
+            value="italic"
+            aria-label="italic"
+          >
+            <FontItalicIcon className="h-4 w-4 group-aria-pressed:text-white" />
           </ToggleGroupItem>
         </ToggleGroup>
       </div>

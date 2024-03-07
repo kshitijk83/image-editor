@@ -1,8 +1,13 @@
 "use client";
 
 import CanvasBox2 from "@/components/CanvasBox2";
+import dynamic from "next/dynamic";
 // import fabric from "@/fabric";
 import React, { useRef, useState } from "react";
+
+const CanvasBox = dynamic(() => import("../components/CanvasBox"), {
+  ssr: false,
+});
 
 const MainArea = () => {
   const [image, setImage] = useState(null);
@@ -22,7 +27,7 @@ const MainArea = () => {
   if (!image) {
     insideBox = <input type="file" onChange={handleUploadImage} />;
   } else {
-    insideBox = <CanvasBox2 image={image} />;
+    insideBox = <CanvasBox image={image} />;
   }
 
   return (

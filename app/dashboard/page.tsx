@@ -10,18 +10,18 @@ const ConfigParams = dynamic(() => import("@/Layout/ConfigParams"), {
 
 export default function Home() {
   return (
-    <main className="flex justify-center bg-slate-300 h-full relative">
-      <aside className="absolute left-0 top-0 w-[300px] h-full bg-white shadow-lg flex-col flex">
+    <main className="flex justify-center h-full relative">
+      <aside className="absolute left-0 top-0 w-[60px] h-full bg-white shadow-lg flex-col flex">
         <Suspense fallback={"Loading..."}>
           <Options />
         </Suspense>
       </aside>
-      <section className="w-full h-full flex justify-center items-center">
-        <MainArea />
-      </section>
-      <aside className="absolute right-0 top-0 w-[400px] h-full bg-white shadow-lg">
+      <aside className="absolute right-0 top-0 w-[400px] z-[1] h-full bg-white shadow-lg">
         <ConfigParams />
       </aside>
+      <section className="w-full h-full bg-slate-300 flex pl-[170px] items-center">
+        <MainArea />
+      </section>
     </main>
   );
 }

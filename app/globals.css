@@ -3,57 +3,27 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 262.1 100% 95%;
-    --foreground: 262.1 5% 0%;
-    --card: 262.1 50% 90%;
-    --card-foreground: 262.1 5% 10%;
-    --popover: 262.1 100% 95%;
-    --popover-foreground: 262.1 100% 0%;
-    --primary: 262.1 88.3% 57.8%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 262.1 30% 70%;
-    --secondary-foreground: 0 0% 0%;
-    --muted: 224.10000000000002 30% 85%;
-    --muted-foreground: 262.1 5% 35%;
-    --accent: 224.10000000000002 30% 80%;
-    --accent-foreground: 262.1 5% 10%;
-    --destructive: 0 100% 30%;
-    --destructive-foreground: 262.1 5% 90%;
-    --border: 262.1 30% 50%;
-    --input: 262.1 30% 18%;
-    --ring: 262.1 88.3% 57.8%;
-    --radius: 0.5rem;
+  * {
+    @apply box-border p-0 m-0;
   }
-  .dark {
-    --background: 262.1 50% 5%;
-    --foreground: 262.1 5% 90%;
-    --card: 262.1 50% 0%;
-    --card-foreground: 262.1 5% 90%;
-    --popover: 262.1 50% 5%;
-    --popover-foreground: 262.1 5% 90%;
-    --primary: 262.1 88.3% 57.8%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 262.1 30% 10%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 224.10000000000002 30% 15%;
-    --muted-foreground: 262.1 5% 60%;
-    --accent: 224.10000000000002 30% 15%;
-    --accent-foreground: 262.1 5% 90%;
-    --destructive: 0 100% 30%;
-    --destructive-foreground: 262.1 5% 90%;
-    --border: 262.1 30% 18%;
-    --input: 262.1 30% 18%;
-    --ring: 262.1 88.3% 57.8%;
-    --radius: 0.5rem;
+
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* background-color: theme(colors.primary.900); */
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
+@layer utilities {
+  .btn-primary {
+    @apply bg-primary-main hover:bg-primary-900 text-white rounded-none;
   }
-  body {
-    @apply bg-background text-foreground;
+
+  .text-primary-gradient {
+    @apply bg-gradient-to-r from-primary-500 to-primary-700 inline-block text-transparent bg-clip-text;
   }
 }

@@ -1,13 +1,13 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -19,44 +19,46 @@ const config = {
     },
     extend: {
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          main: "#0083ff",
+          900: "#000f1c",
+          800: "#002c55",
+          700: "#00498e",
+          600: "#0066c6",
+          500: "#0083ff",
+          400: "#399eff",
+          300: "#71baff",
+          200: "#aad6ff",
+          100: "#e3f1ff",
         },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+        // primary: {
+        //   main: "#47b89e",
+        //   900: "#0e2520",
+        //   700: "#2a6f5f",
+        //   500: "#47b89e",
+        //   300: "#90d5c5",
+        //   100: "#daf1ec",
+        // },
+        greys: {
+          900: "#0e0e0e",
+          800: "#2a2a2a",
+          700: "#474747",
+          600: "#636363",
+          500: "#808080",
+          400: "#9c9c9c",
+          300: "#b8b8b8",
+          200: "#d4d4d4",
+          100: "#f1f1f1",
+          0: "#ffffff",
         },
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+      boxShadow: {
+        "light-100":
+          "0px 12px 20px 0px rgba(184, 184, 184, 0.03), 0px 6px 12px 0px rgba(184, 184, 184, 0.02), 0px 2px 4px 0px rgba(184, 184, 184, 0.03)",
+        "light-200": "10px 10px 20px 0px rgba(218, 213, 213, 0.10)",
+        "light-300": "-10px 10px 20px 0px rgba(218, 213, 213, 0.10)",
+        "dark-100": "0px 2px 10px 0px rgba(46, 52, 56, 0.10)",
+        "dark-200": "2px 0px 20px 0px rgba(39, 36, 36, 0.04)",
       },
       keyframes: {
         "accordion-down": {
@@ -75,6 +77,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;

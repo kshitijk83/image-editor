@@ -51,7 +51,7 @@ const timer = async (value) => {
 
 export async function authenticate(data: z.infer<typeof UserSchema>) {
   try {
-    await timer(2000);
+    // await timer(2000);
     const email = data.email;
     const password = data.password;
     const user = userList.getUser({ email, password });
@@ -79,7 +79,7 @@ export async function logout() {
 }
 
 export async function signUp(data: z.infer<typeof UserSchema>) {
-  await timer(2000);
+  // await timer(2000);
   const email = data.email;
   const password = data.password;
   if (Boolean(userList.findUser(email))) {
