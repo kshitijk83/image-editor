@@ -9,7 +9,9 @@ import React, {
   useRef,
 } from "react";
 import { useFabricRef } from "@/hooks/useFabricRef";
-import useFeatureStore from "@/stores/useFeatureStore";
+import useFeatureStore, {
+  SELECTION_CONFIG_MAP,
+} from "@/stores/useFeatureStore";
 
 const CanvasBox = function CanvasBox({ image }) {
   const { fabricRef, canvasRef } = useFabricRef();
@@ -64,12 +66,30 @@ const CanvasBox = function CanvasBox({ image }) {
         setCanvasPainted(true);
 
         fabricRef.current.on("selection:created", function (obj) {
-          setSelection(fabricRef.current.getActiveObject().type);
+          console.log("selection:created", obj);
+          fabricRef.current.isDrawingMode = false;
+          setSelection(
+            SELECTION_CONFIG_MAP[fabricRef.current.getActiveObject().type]
+          );
           // Update component state or perform other actions
         });
 
         fabricRef.current.on("selection:updated", function (obj) {
-          setSelection(fabricRef.current.getActiveObject().type);
+          console.log("selection:updated", obj);
+          fabricRef.current.isDrawingMode = false;
+          setSelection(
+            SELECTION_CONFIG_MAP[fabricRef.current.getActiveObject().type]
+          );
+          // Update component state or perform other actions
+        });
+
+        fabricRef.current.on("custom:cleareverything", function (obj) {
+          console.log("custom:cleareverything", obj);
+
+          fabricRef.current.isDrawingMode = false;
+          fabricRef.current.discardActiveObject();
+          fabricRef.current.requestRenderAll();
+          setSelection("");
           // Update component state or perform other actions
         });
       };

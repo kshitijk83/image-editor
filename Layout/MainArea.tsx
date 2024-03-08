@@ -25,7 +25,13 @@ const MainArea = () => {
 
   let insideBox;
   if (!image) {
-    insideBox = <input type="file" onChange={handleUploadImage} />;
+    insideBox = (
+      <input
+        type="file"
+        onChange={handleUploadImage}
+        accept="image/*, image/svg+xml"
+      />
+    );
   } else {
     insideBox = <CanvasBox image={image} />;
   }

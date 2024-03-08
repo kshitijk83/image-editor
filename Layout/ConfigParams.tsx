@@ -14,7 +14,7 @@ const COLORS = {
 
 const ConfigParams = () => {
   const { fabricRef } = useFabricRef();
-  const activeConfig = useFeatureStore((state) => state.activeConfig);
+  const activeSelection = useFeatureStore((state) => state.activeSelection);
   // const activeSelection = useFeatureStore((state) => state.activeSelection);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const ConfigParams = () => {
   }, []);
 
   const renderFeatureParams = () => {
-    switch (activeConfig) {
+    switch (activeSelection) {
       case FEATURES.TEXT_BOX:
         return <TextBoxConfig />;
 

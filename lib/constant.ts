@@ -1,6 +1,7 @@
 export const FEATURES = {
   TEXT_BOX: "TEXT_BOX",
   IMAGE: "FILTER",
+  DRAW: "DRAW",
 };
 
 export const CONFIG = {

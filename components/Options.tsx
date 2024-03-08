@@ -5,7 +5,9 @@ import React from "react";
 
 import fabric from "@/fabric";
 import { Button } from "./ui/button";
-import useFeatureStore from "@/stores/useFeatureStore";
+import useFeatureStore, {
+  SELECTION_CONFIG_MAP,
+} from "@/stores/useFeatureStore";
 import {
   DownloadIcon,
   ImageIcon,
@@ -18,17 +20,25 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
+import { FEATURES } from "@/lib/constant";
 
-const OptionItem = ({ onClick, children, tooltipText, disabled }) => {
+const OptionItem = ({ onClick, children, tooltipText, disabled, value }) => {
+  const { activeSelection, isCanvasPainted } = useFeatureStore();
+
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger>
-          <Button disabled={disabled} className="btn-primary" onClick={onClick}>
-            {children}
-          </Button>
+        <TooltipTrigger
+          disabled={!isCanvasPainted}
+          aria-pressed={activeSelection === value}
+          className={`btn-primary disabled:bg-primary-300
+          aria-pressed:w-full aria-pressed:bg-primary-700 hover:bg-primary-700
+          disabled:pointer-events-none p-3 flex justify-center`}
+          onClick={onClick}
+        >
+          {children}
         </TooltipTrigger>
-        <TooltipContent className="bg-greys-800 text-white">
+        <TooltipContent className="bg-greys-800 text-white" side="right">
           <p>{tooltipText}</p>
         </TooltipContent>
       </Tooltip>
@@ -38,7 +48,7 @@ const OptionItem = ({ onClick, children, tooltipText, disabled }) => {
 
 const Options = () => {
   const { canvasRef, fabricRef } = useFabricRef();
-  const isCanvasPainted = useFeatureStore((state) => state.isCanvasPainted);
+  const { isCanvasPainted, activeSelection, setSelection } = useFeatureStore();
 
   const handleDownload = () => {
     if (fabricRef.current) {
@@ -55,66 +65,80 @@ const Options = () => {
     }
   };
 
-  const addTextHandler = () => {
-    var text = new fabric.IText("hello world", {
-      left: 100,
-      top: 100,
-      fontSize: 32,
-      //   editable: true,
-    });
-    text.borderColor = "black";
-    text.cornerColor = "black";
-    text.transparentCorners = true;
-    fabricRef.current.setActiveObject(text);
+  const discardAllFeatures = () => {
+    // setSelection("");
+    fabricRef.current.fire("custom:cleareverything");
+  };
 
-    fabricRef.current.add(text);
+  const addTextHandler = () => {
+    if (activeSelection === FEATURES.TEXT_BOX) {
+      discardAllFeatures();
+    } else {
+      discardAllFeatures();
+      setSelection(FEATURES.TEXT_BOX);
+    }
   };
 
   const handleFilters = () => {
-    fabricRef.current.forEachObject((obj) => {
-      if (obj instanceof fabric.Image && obj.type === "image") {
-        fabricRef.current.setActiveObject(obj);
-        return false;
-      }
-    });
+    if (activeSelection === FEATURES.IMAGE) {
+      discardAllFeatures();
+    } else {
+      fabricRef.current.forEachObject((obj) => {
+        if (obj instanceof fabric.Image && obj.type === "image") {
+          fabricRef.current.setActiveObject(obj);
+          return false;
+        }
+      });
 
-    fabricRef.current.renderAll();
+      fabricRef.current.renderAll();
+      setSelection(FEATURES.IMAGE);
+    }
   };
 
-  // if (!isCanvasPainted) {
-  //   return (
-  //     <div className="h-full w-full flex items-center justify-center">
-  //       <span className="font-bold">Please upload image first</span>
-  //     </div>
-  //   );
-  // }
+  const handleFreeDrawingMode = () => {
+    if (activeSelection === FEATURES.DRAW) {
+      discardAllFeatures();
+    } else {
+      fabricRef.current.isDrawingMode = true;
+      fabricRef.current.freeDrawingBrush.color = "red";
+      fabricRef.current.freeDrawingBrush.width = 12;
+      setSelection(FEATURES.DRAW);
+    }
+  };
 
   return (
-    <div className="flex flex-col gap-3 items-center my-4 h-full justify-center">
-      <OptionItem
-        disabled={!isCanvasPainted}
-        onClick={addTextHandler}
-        tooltipText="Text"
-      >
-        <TextIcon />
-      </OptionItem>
+    <div className="flex flex-col gap-3 items-start my-4 h-full justify-center">
       <OptionItem
         disabled={!isCanvasPainted}
         onClick={handleFilters}
         tooltipText="Image"
+        value={FEATURES.IMAGE}
       >
         <ImageIcon />
+      </OptionItem>
+      <OptionItem
+        disabled={!isCanvasPainted}
+        onClick={addTextHandler}
+        tooltipText="Text"
+        value={FEATURES.TEXT_BOX}
+      >
+        <TextIcon />
       </OptionItem>
 
       <OptionItem
         disabled={!isCanvasPainted}
-        onClick={() => {}}
-        tooltipText="Image"
+        onClick={handleFreeDrawingMode}
+        tooltipText="Draw"
+        value={FEATURES.DRAW}
       >
         <Pencil1Icon />
       </OptionItem>
 
-      <Button className="m-4 btn-primary mt-auto" onClick={handleDownload}>
+      <Button
+        className="btn-primary mt-auto"
+        onClick={handleDownload}
+        disabled={!isCanvasPainted}
+      >
         <DownloadIcon />
       </Button>
     </div>

@@ -9,6 +9,8 @@ import {
 import React from "react";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 import { Input } from "./ui/input";
+import { Button } from "./ui/button";
+import fabric from "@/fabric";
 
 const TextBoxConfig = () => {
   const { fabricRef } = useFabricRef();
@@ -59,8 +61,31 @@ const TextBoxConfig = () => {
     fabricRef.current.renderAll();
   };
 
+  const addTextHandler = (e) => {
+    var text = new fabric.IText("hello world", {
+      left: 100,
+      top: 100,
+      fontSize: 32,
+      //   editable: true,
+    });
+    text.borderColor = "black";
+    text.cornerColor = "black";
+    text.transparentCorners = true;
+    fabricRef.current.setActiveObject(text);
+    fabricRef.current.add(text);
+    fabricRef.current.renderAll();
+  };
+
   return (
     <div>
+      <div className="flex flex-col gap-2 items-center mb-5">
+        <Button
+          className="text-center text-lg font-semibold"
+          onClick={addTextHandler}
+        >
+          Add Text{" "}
+        </Button>
+      </div>
       <div className="flex flex-col gap-2 items-center mb-5">
         <p className="text-center text-lg font-semibold">Text Color</p>
         <input
