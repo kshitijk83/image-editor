@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 // import fabric from "@/fabric";
 import React, { useRef, useState } from "react";
 
-const CanvasBox = dynamic(() => import("../components/CanvasBox"), {
+const CanvasBox = dynamic(() => import("./CanvasBox"), {
   ssr: false,
 });
 

@@ -1,10 +1,10 @@
-import MainArea from "@/layout/MainArea";
+import MainArea from "@/components/MainArea";
 // import CanvasBox2 from "@/components/CanvasBox2";
 import { FEATURES } from "@/lib/constant";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 const Options = dynamic(() => import("@/components/Options"), { ssr: false });
-const ConfigParams = dynamic(() => import("@/layout/ConfigParams"), {
+const ConfigParams = dynamic(() => import("@/components/ConfigParams"), {
   ssr: false,
 });
 
