@@ -18,6 +18,7 @@ const CanvasBox = function CanvasBox({ image }) {
   const setSelection = useFeatureStore((state) => state.setSelection);
   const setCanvasPainted = useFeatureStore((state) => state.setCanvasPainted);
   useEffect(() => {
+    fabric.textureSize = 8192;
     if (image && !fabricRef.current) {
       let maxWidth = 800;
       let maxHeight = 600;
@@ -59,12 +60,12 @@ const CanvasBox = function CanvasBox({ image }) {
         };
 
         // this is being done to resize the image size to not exceed maxTextureSize = 2048 set by webGL
-        imgInstance.filters.push(
-          new fabric.Image.filters.Resize({
-            scaleX: scaleToFitResize,
-            scaleY: scaleToFitResize,
-          })
-        );
+        // imgInstance.filters.push(
+        //   new fabric.Image.filters.Resize({
+        //     scaleX: scaleToFitResize,
+        //     scaleY: scaleToFitResize,
+        //   })
+        // );
         imgInstance.filters.push(filters.brightness);
         imgInstance.filters.push(filters.saturation);
         imgInstance.filters.push(filters.contrast);
@@ -83,6 +84,7 @@ const CanvasBox = function CanvasBox({ image }) {
           cornerStyle: "circle",
           borderDashArray: [3, 3],
         });
+
         fabricRef.current.add(imgInstance);
 
         setCanvasPainted(true);
