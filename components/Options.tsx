@@ -31,8 +31,9 @@ const OptionItem = ({ onClick, children, tooltipText, disabled, value }) => {
         <TooltipTrigger
           disabled={!isCanvasPainted}
           aria-pressed={activeSelection === value}
-          className={`btn-primary disabled:bg-primary-300
-          aria-pressed:w-full aria-pressed:bg-primary-700 hover:bg-primary-700
+          className={` disabled:bg-primary-300
+          aria-pressed:w-full aria-pressed:bg-primary-main hover:bg-primary-main
+          btn-primary-700
           disabled:pointer-events-none p-3 flex justify-center`}
           onClick={onClick}
         >
@@ -60,13 +61,12 @@ const Options = () => {
 
       a.href = dt;
       a.target = "_blank";
-      a.download = "a.jpeg";
+      a.download = "image.jpeg";
       a.click();
     }
   };
 
   const discardAllFeatures = () => {
-    // setSelection("");
     fabricRef.current.fire("custom:cleareverything");
   };
 
@@ -83,14 +83,6 @@ const Options = () => {
     if (activeSelection === FEATURES.IMAGE) {
       discardAllFeatures();
     } else {
-      fabricRef.current.forEachObject((obj) => {
-        if (obj instanceof fabric.Image && obj.type === "image") {
-          fabricRef.current.setActiveObject(obj);
-          return false;
-        }
-      });
-
-      fabricRef.current.renderAll();
       setSelection(FEATURES.IMAGE);
     }
   };
@@ -107,7 +99,7 @@ const Options = () => {
   };
 
   return (
-    <div className="flex flex-col gap-3 items-start my-4 h-full justify-center">
+    <div className="flex flex-col gap-3 items-start h-full justify-center">
       <OptionItem
         disabled={!isCanvasPainted}
         onClick={handleFilters}
@@ -135,7 +127,7 @@ const Options = () => {
       </OptionItem>
 
       <Button
-        className="btn-primary mt-auto"
+        className="btn-primary-700 mt-auto"
         onClick={handleDownload}
         disabled={!isCanvasPainted}
       >

@@ -31,6 +31,8 @@ const CanvasBox = function CanvasBox({ image }) {
           maxHeight / imgObj.height
         );
 
+        let scaleToFitResize = 2048 / Math.max(imgObj.width, imgObj.height);
+
         fabricRef.current = new fabric.Canvas("canvas", {
           width: scale * imgObj.width,
           height: scale * imgObj.height,
@@ -56,11 +58,31 @@ const CanvasBox = function CanvasBox({ image }) {
           hue: new fabric.Image.filters.HueRotation(),
         };
 
+        // this is being done to resize the image size to not exceed maxTextureSize = 2048 set by webGL
+        imgInstance.filters.push(
+          new fabric.Image.filters.Resize({
+            scaleX: scaleToFitResize,
+            scaleY: scaleToFitResize,
+          })
+        );
         imgInstance.filters.push(filters.brightness);
         imgInstance.filters.push(filters.saturation);
         imgInstance.filters.push(filters.contrast);
         imgInstance.filters.push(filters.hue);
         imgInstance.applyFilters();
+        fabricRef.current.selectionBorderColor = "#0083ff";
+        // fabricRef.current. = "black";
+        // fabricRef.current.tran = true;
+        fabric.Object.prototype.set({
+          transparentCorners: false,
+          cornerColor: "#0083ff",
+          cornerStrokeColor: "#000f1c",
+          borderColor: "red",
+          cornerSize: 12,
+          padding: 10,
+          cornerStyle: "circle",
+          borderDashArray: [3, 3],
+        });
         fabricRef.current.add(imgInstance);
 
         setCanvasPainted(true);

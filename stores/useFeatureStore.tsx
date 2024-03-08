@@ -16,36 +16,45 @@ export const CANVAS_FEATURE_MAP = {
   [FEATURES.DRAW]: "draw",
 };
 
-type State = {
-  isCanvasPainted: boolean;
-  // activeConfig: string;
-  activeSelection: string;
-  setSelection: (x: string) => void;
-  setCanvasPainted: (x: boolean) => void;
+type ImageState = {
+  brightness: number;
+  saturation: number;
+  contrast: number;
+  ["hue-rotation"]: number;
 };
 
-const useFeatureStore = create<State>()(
-  // devtools(
-  //   persist(
-  (set) => ({
-    isCanvasPainted: false,
-    activeSelection: "",
-    // activeConfig: "",
-    setSelection: (activeObjectName) =>
-      set((_) => {
-        return {
-          activeSelection: activeObjectName,
-          // activeConfig: SELECTION_CONFIG_MAP[activeObjectName],
-        };
-      }),
-    setCanvasPainted: (isSet) =>
-      set((_) => ({
-        isCanvasPainted: isSet,
-      })),
-  })
-  //     { name: "feature-store" }
-  //   )
-  // )
-);
+type State = {
+  isCanvasPainted: boolean;
+  activeSelection: string;
+  imageState: ImageState;
+  setSelection: (x: string) => void;
+  setCanvasPainted: (x: boolean) => void;
+  setImageState: (newState) => void;
+};
+
+const useFeatureStore = create<State>()((set) => ({
+  isCanvasPainted: false,
+  activeSelection: "",
+  imageState: {
+    brightness: 0,
+    saturation: 0,
+    contrast: 0,
+    ["hue-rotation"]: 0,
+  },
+  setSelection: (activeObjectName) =>
+    set((_) => {
+      return {
+        activeSelection: activeObjectName,
+      };
+    }),
+  setCanvasPainted: (isSet) =>
+    set((_) => ({
+      isCanvasPainted: isSet,
+    })),
+  setImageState: (newState: ImageState) =>
+    set((_) => ({
+      imageState: { ...newState },
+    })),
+}));
 
 export default useFeatureStore;

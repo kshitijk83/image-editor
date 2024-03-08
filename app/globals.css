@@ -23,7 +23,16 @@
     @apply bg-primary-main hover:bg-primary-900 text-white rounded-none;
   }
 
+  .btn-primary-700 {
+    @apply bg-primary-700 hover:bg-primary-900 text-white rounded-none;
+  }
+
   .text-primary-gradient {
     @apply bg-gradient-to-r from-primary-500 to-primary-700 inline-block text-transparent bg-clip-text;
+  }
+
+  .btn-icon-primary {
+    @apply text-greys-100 border-white bg-greys-600 rounded-none text-2xl
+    aria-pressed:bg-primary-600 hover:bg-primary-500;
   }
 }

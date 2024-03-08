@@ -7,6 +7,7 @@ const config = {
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
+    "./layout/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -31,14 +32,6 @@ const config = {
           200: "#aad6ff",
           100: "#e3f1ff",
         },
-        // primary: {
-        //   main: "#47b89e",
-        //   900: "#0e2520",
-        //   700: "#2a6f5f",
-        //   500: "#47b89e",
-        //   300: "#90d5c5",
-        //   100: "#daf1ec",
-        // },
         greys: {
           900: "#0e0e0e",
           800: "#2a2a2a",

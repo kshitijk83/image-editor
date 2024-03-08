@@ -37,8 +37,8 @@ const MainArea = () => {
   }
 
   return (
-    <div className="flex flex-col">
-      <div>{insideBox}</div>
+    <div className="absolute top-[20%] right-[10%] origin-center">
+      {insideBox}
     </div>
   );
 };
