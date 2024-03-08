@@ -39,7 +39,10 @@ const OptionItem = ({ onClick, children, tooltipText, disabled, value }) => {
         >
           {children}
         </TooltipTrigger>
-        <TooltipContent className="bg-greys-800 text-white" side="right">
+        <TooltipContent
+          className="bg-greys-800 text-white z-[200]"
+          side="right"
+        >
           <p>{tooltipText}</p>
         </TooltipContent>
       </Tooltip>

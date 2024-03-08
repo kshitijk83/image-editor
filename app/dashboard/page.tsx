@@ -11,7 +11,7 @@ const ConfigParams = dynamic(() => import("@/components/ConfigParams"), {
 export default function Home() {
   return (
     <main className="flex justify-center h-full relative">
-      <aside className="absolute left-0 top-0 w-[50px] z-[2] h-full bg-white shadow-lg flex">
+      <aside className="absolute left-0 top-0 w-[50px] z-[3] h-full bg-white shadow-lg flex">
         <Options />
         {/* <div className="w-full bg-primary-600">
           <ConfigParams />
