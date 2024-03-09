@@ -36,10 +36,11 @@ const LoginForm = () => {
         email: values.email,
         password: values.password,
       });
-      if (resp.type === "error") {
+      if (resp?.type === "error") {
         form.setError("root", { message: resp.message });
       }
     } catch (err) {
+      console.log(err);
       form.setError("root", { message: JSON.stringify(err) });
     } finally {
       setLoading(false);
@@ -58,7 +59,7 @@ const LoginForm = () => {
                 <FormControl>
                   <Input placeholder="Enter Email" {...field} />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-600" />
               </FormItem>
             )}
           />
@@ -71,12 +72,14 @@ const LoginForm = () => {
                 <FormControl>
                   <Input placeholder="Enter Password" {...field} />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-600" />
               </FormItem>
             )}
           />
           {form.formState.errors.root?.message && (
-            <FormMessage>{form.formState.errors.root.message}</FormMessage>
+            <FormMessage className="text-red-600">
+              {form.formState.errors.root.message}
+            </FormMessage>
           )}
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? "loading..." : "Login"}
