@@ -31,7 +31,7 @@ const OptionItem = ({ onClick, children, tooltipText, disabled, value }) => {
         <TooltipTrigger
           disabled={!isCanvasPainted}
           aria-pressed={activeSelection === value}
-          className={` disabled:bg-primary-300
+          className={`disabled:bg-primary-300
           aria-pressed:w-full aria-pressed:bg-primary-main hover:bg-primary-main
           btn-primary-700
           disabled:pointer-events-none p-3 flex justify-center`}
